@@ -50,7 +50,7 @@ target_sources(
         FILES
             ../include/piwm/display.hxx
             ../include/piwm/input.hxx
-            ../include/piwm/window.hxx
+        ../include/piwm/Window.hxx
 )
 
 target_compile_features(piwm PUBLIC cxx_std_23)

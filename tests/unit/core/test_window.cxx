@@ -2,15 +2,18 @@
 
 #include <piwm/window.hxx>
 
-SCENARIO("creating a window")
+SCENARIO("Instantiating a Window")
 {
-    GIVEN("pi::WindowManager")
+    GIVEN("The piwm library")
     {
-        WHEN("a window is created with default parameters")
+        WHEN("A window is created with default parameters")
         {
-            auto const window = piwm::make_window();
+            auto window = pi::make_window();
 
-            THEN("the window should not be null.")
+            THEN("The window should not be null.")
+            {
+                REQUIRE(window != nullptr);
+            }
         }
     }
 }
