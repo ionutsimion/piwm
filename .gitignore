@@ -1,0 +1,18 @@
+# Build folders
+build/
+cmake-build-*/
+
+# IDE folders
+.idea/
+.vscode/
+
+# Compiled artifacts
+*.o
+*.a
+*.so
+*.dll
+*.lib
+*.exe
+
+# CMake user-specific files
+CMakeUserPresets.json
