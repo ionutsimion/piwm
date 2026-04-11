@@ -1,4 +1,6 @@
 include(CTest)
+
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(Catch)
 
 add_executable(piwm_unit_tests unit/core/test_window.cxx)

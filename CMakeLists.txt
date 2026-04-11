@@ -7,7 +7,6 @@ project(piwm
 )
 
 include(cmake/dependencies.cmake)
-include(cmake/install.cmake)
 
 option(PIWM_BUILD_TESTS "Build piwm tests" ON)
 option(PIWM_BUILD_EXAMPLES "Build piwm examples" ON)
@@ -25,3 +24,5 @@ endif()
 if(PIWM_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
+
+include(cmake/install.cmake)
