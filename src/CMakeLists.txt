@@ -1,10 +1,10 @@
 add_library(piwm)
 add_library(pi::WindowManager ALIAS piwm)
 
-#target_sources(
-#        piwm
-#        PRIVATE src/core/
-#)
+target_sources(
+        piwm
+        PRIVATE core/window_base.cxx
+)
 
 if(WIN32)
     target_sources(
@@ -17,14 +17,10 @@ elseif(UNIX AND NOT APPLE)
         find_package(PkgConfig REQUIRED)
         pkg_check_modules(Wayland REQUIRED wayland-client)
 
-        target_sources(
-                piwm
-                PRIVATE
-                platform/wayland/window_wayland.cxx
-                platform/x11/window_x11.cxx
-        )
+        target_sources(piwm PRIVATE platform/wayland/window_wayland.cxx )
 
         target_link_libraries(piwm PRIVATE ${Wayland_LIBRARIES})
+
         target_include_directories(piwm PRIVATE ${Wayland_INCLUDE_DIRS})
     endif()
     if(PIWM_SUPPORT_X11)
@@ -39,18 +35,19 @@ endif()
 target_include_directories(
         piwm
         PRIVATE
-        src
-        ${typedecl_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}
+            ${typedecl_SOURCE_DIR}/include
 )
 
 target_sources(
-        piwm PUBLIC
+        piwm
+        PUBLIC
         FILE_SET HEADERS
         BASE_DIRS ../include/
         FILES
             ../include/piwm/display.hxx
             ../include/piwm/input.hxx
-        ../include/piwm/Window.hxx
+            ../include/piwm/Window.hxx
 )
 
 target_compile_features(piwm PUBLIC cxx_std_23)

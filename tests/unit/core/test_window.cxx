@@ -2,6 +2,8 @@
 
 #include <piwm/window.hxx>
 
+using namespace std::string_view_literals;
+
 SCENARIO("Instantiating a Window")
 {
     GIVEN("The piwm library")
@@ -10,9 +12,14 @@ SCENARIO("Instantiating a Window")
         {
             auto window = pi::make_window();
 
-            THEN("The window should not be null.")
+            THEN("The window should not be null")
             {
                 REQUIRE(window != nullptr);
+            }
+
+            THEN("The window should have a default title")
+            {
+                REQUIRE(window->title() == "Hello"sv);
             }
         }
     }
