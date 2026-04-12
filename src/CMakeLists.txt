@@ -35,7 +35,11 @@ target_include_directories(
         piwm
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}
-            ${typedecl_SOURCE_DIR}/include
+        PUBLIC
+            $<BUILD_INTERFACE:${typedecl_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:include>
+            $<BUILD_INTERFACE:${typedecl_SOURCE_DIR}/internal>
+            $<INSTALL_INTERFACE:internal>
 )
 
 target_sources(
@@ -46,6 +50,7 @@ target_sources(
         FILES
             ../include/piwm/display.hxx
             ../include/piwm/input.hxx
+            ../include/piwm/types.hxx
             ../include/piwm/window.hxx
 )
 

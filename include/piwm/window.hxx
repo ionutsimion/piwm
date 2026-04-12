@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "types.hxx"
+
 namespace pi
 {
 
@@ -19,7 +21,9 @@ namespace pi
 
         virtual ~Window() = default;
 
-        [[nodiscard]] virtual auto title() const -> std::string_view = 0;
+        [[nodiscard]] virtual auto title() const -> Title = 0;
+        [[nodiscard]] virtual auto position() const -> Position = 0;
+        [[nodiscard]] virtual auto size() const -> Size = 0;
     };
 
     auto make_window() -> std::unique_ptr<Window>;

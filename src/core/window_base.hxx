@@ -12,7 +12,9 @@ namespace pi::core
 
         ~WindowBase() override = default;
 
-        [[nodiscard]] auto title() const -> std::string_view override;
+        [[nodiscard]] auto title() const -> Title override;
+        [[nodiscard]] auto position() const -> Position override;
+        [[nodiscard]] auto size() const -> Size override;
     };
 }
 

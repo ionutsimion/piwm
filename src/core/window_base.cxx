@@ -1,8 +1,19 @@
 #include <core/window_base.hxx>
 
-auto pi::core::WindowBase::title() const -> std::string_view
+using namespace std::string_literals;
+
+auto pi::core::WindowBase::title() const -> Title
 {
-    return "Hello"sv;
+    return Title{ "Hello"s };}
+
+auto pi::core::WindowBase::position() const -> Position
+{
+    return Position{ X{ Scalar{ 0 } }, Y{ Scalar{ 0 } } };
+}
+
+auto pi::core::WindowBase::size() const -> Size
+{
+    return Size{ Width{ Scalar{ 800 } }, Height{ Scalar{ 600 } } };
 }
 
 auto pi::make_window() -> std::unique_ptr<Window>
