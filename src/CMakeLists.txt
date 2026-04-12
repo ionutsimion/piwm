@@ -13,7 +13,7 @@ if(WIN32)
             platform/win32/window_win32.cxx
     )
 elseif(UNIX AND NOT APPLE)
-    if(PIWM_SUPPORT_WAYLAND)
+    if(PIWM_DISPLAY_SERVER STREQUAL "Wayland")
         find_package(PkgConfig REQUIRED)
         pkg_check_modules(Wayland REQUIRED wayland-client)
 
@@ -22,8 +22,7 @@ elseif(UNIX AND NOT APPLE)
         target_link_libraries(piwm PRIVATE ${Wayland_LIBRARIES})
 
         target_include_directories(piwm PRIVATE ${Wayland_INCLUDE_DIRS})
-    endif()
-    if(PIWM_SUPPORT_X11)
+    elseif(PIWM_DISPLAY_SERVER STREQUAL "X11")
         find_package(X11 REQUIRED)
 
         target_sources(piwm PRIVATE platform/x11/window_x11.cxx)
@@ -47,7 +46,7 @@ target_sources(
         FILES
             ../include/piwm/display.hxx
             ../include/piwm/input.hxx
-            ../include/piwm/Window.hxx
+            ../include/piwm/window.hxx
 )
 
 target_compile_features(piwm PUBLIC cxx_std_23)

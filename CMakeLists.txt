@@ -6,14 +6,8 @@ project(piwm
         LANGUAGES CXX
 )
 
+include(cmake/options.cmake)
 include(cmake/dependencies.cmake)
-
-option(PIWM_BUILD_TESTS "Build piwm tests" ON)
-option(PIWM_BUILD_EXAMPLES "Build piwm examples" ON)
-if(UNIX AND NOT APPLE)
-    option(PIWM_SUPPORT_WAYLAND "Support Wayland windows management system" ON)
-    option(PIWM_SUPPORT_X11 "Support X11 windows management system" ON)
-endif()
 
 enable_testing()
 

@@ -3,8 +3,6 @@
 
 #include <memory>
 
-using namespace std::string_view_literals;
-
 namespace pi
 {
 
