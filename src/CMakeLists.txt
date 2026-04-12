@@ -38,8 +38,6 @@ target_include_directories(
         PUBLIC
             $<BUILD_INTERFACE:${typedecl_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:include>
-            $<BUILD_INTERFACE:${typedecl_SOURCE_DIR}/internal>
-            $<INSTALL_INTERFACE:internal>
 )
 
 target_sources(
