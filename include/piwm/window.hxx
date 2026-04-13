@@ -3,8 +3,6 @@
 
 #include <memory>
 
-#include <typelists/typelists.hxx>
-
 #include <piwm/types.hxx>
 
 namespace piwm

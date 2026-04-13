@@ -2,12 +2,13 @@
 #define PIWM_TYPES_HXX
 
 #include <typelists/struct.hxx>
+#include <typelists/typedecl.hxx>
 
 namespace piwm
 {
-    using Title = pi::td::typedecl<std::string, TAG(Title)>;
-
     using Scalar = double;
+
+    using Title = pi::td::typedecl<std::string, TAG(Title)>;
 
     using X = pi::td::typedecl<Scalar, TAG(XCoordinate)>;
     using Y = pi::td::typedecl<Scalar, TAG(YCoordinate)>;

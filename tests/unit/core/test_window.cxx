@@ -5,64 +5,125 @@
 #include <piwm/types.hxx>
 #include <piwm/window.hxx>
 
+#include "catch2/matchers/catch_matchers_floating_point.hpp"
+
 using namespace std::string_literals;
 
-SCENARIO("Instantiating a Window")
+TEST_CASE("1.1. A Window instance created with default attributes is not null", "[make_window]")
 {
-    GIVEN("The piwm library")
-    {
-        WHEN("A window is created with default parameters")
-        {
-            using namespace piwm;
+    REQUIRE(piwm::make_window() != nullptr);
+}
 
-            auto const window = make_window();
-            auto const default_title = "Hello"s;
-            auto const default_x = X{ Scalar{ 0 } };
-            auto const default_y = Y{ Scalar{ 0 } };
-            auto const default_position = Position{ default_x , default_y };
-            auto const default_width = Width{ Scalar{ 800 } };
-            auto const default_height = Height{ Scalar{ 600 } };
-            auto const default_size = Size{ Width{ Scalar{ 800 } }, Height{ Scalar{ 600 } } };
+TEST_CASE("1.2.1.1. get<Title> returns a Title instance", "[Window::get][Title]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Title>()), piwm::Title>);
+}
 
-            THEN("The window should not be null")
-            {
-                REQUIRE(window != nullptr);
-            }
+TEST_CASE("1.2.1.2. get<Title> is convertible to std::string", "[Window::get][Title]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_convertible_v<decltype(window->get<piwm::Title>()), std::string>);
+}
 
-            THEN("The window should have a default title")
-            {
-                REQUIRE(window->get<Title>() == default_title);
-            }
+TEST_CASE("1.2.1.3. get<Title> for default initialized windows", "[Window::get][Title]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(window->get<piwm::Title>() == "PiWM"s);
+}
 
-            THEN("The window should be positioned at position (0, 0)")
-            {
-                REQUIRE(window->get<Position>() == default_position);
-            }
+TEST_CASE("1.2.2.1. get<Position> returns a Position instance", "[Window::get][Position]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Position>()), piwm::Position>);
+}
 
-            THEN("The horizontal position of the window should be 0")
-            {
-                REQUIRE(window->get<X>() == default_x);
-            }
+TEST_CASE("1.2.2.2. get<Position> for default initialized windows", "[Window::get][Position]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(window->get<piwm::Position>() == piwm::Position{ piwm::X{ 0 }, piwm::Y{ 0 } });
+}
 
-            THEN("The vertical position of the window should be 0")
-            {
-                REQUIRE(window->get<Y>() == default_y);
-            }
+TEST_CASE("1.2.2.3. get<X> returns an X instance", "[Window::get][Position][X]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::X>()), piwm::X>);
+}
 
-            THEN("The window size is 800 pixels in width by 600 pixels in height")
-            {
-                REQUIRE(window->get<Size>() == default_size);
-            }
+TEST_CASE("1.2.2.4. get<X> is convertible to Scalar", "[Window::get][Position][X]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_convertible_v<decltype(window->get<piwm::X>()), piwm::Scalar>);
+}
 
-            THEN("The window is 800 pixels wide")
-            {
-                REQUIRE(window->get<Width>() == default_width);
-            }
+TEST_CASE("1.2.2.5. get<X> for default initialized windows", "[Window::get][Position][X]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE_THAT(window->get<piwm::X>(), Catch::Matchers::WithinAbs(0.0, 1.e-10));
+}
 
-            THEN("The window is 600 pixels tall")
-            {
-                REQUIRE(window->get<Height>() == default_height);
-            }
-        }
-    }
+TEST_CASE("1.2.2.6. get<Y> returns a Y instance", "[Window::get][Position][Y]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Y>()), piwm::Y>);
+}
+
+TEST_CASE("1.2.2.7. get<Y> is convertible to Scalar", "[Window::get][Position][Y]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_convertible_v<decltype(window->get<piwm::Y>()), piwm::Scalar>);
+}
+
+TEST_CASE("1.2.2.8. get<Y> for default initialized windows", "[Window::get][Position][Y]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE_THAT(window->get<piwm::Y>(), Catch::Matchers::WithinAbs(0.0, 1.e-10));
+}
+
+TEST_CASE("1.2.3.1. get<Size> returns a Size instance", "[Window::get][Size]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Size>()), piwm::Size>);
+}
+
+TEST_CASE("1.2.3.2. get<Size> for default initialized windows", "[Window::get][Size]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(window->get<piwm::Size>() == piwm::Size{ piwm::Width{ piwm::Scalar{ 800 } }, piwm::Height{ 600 } });
+}
+
+TEST_CASE("1.2.3.3. get<Width> return a Width instance", "[Window::get][Size][Width]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Width>()), piwm::Width>);
+}
+
+TEST_CASE("1.2.3.4. get<Width> is convertible to Scalar", "[Window::get][Size][Width]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_convertible_v<decltype(window->get<piwm::Width>()), piwm::Scalar>);
+}
+
+TEST_CASE("1.2.3.5. get<Width> for default initialized windows", "[Window::get][Size][Width]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(window->get<piwm::Width>() == 800);
+}
+
+TEST_CASE("1.2.3.6. get<Height> return a Height instance", "[Window::get][Size][Height]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_same_v<decltype(window->get<piwm::Height>()), piwm::Height>);
+}
+
+TEST_CASE("1.2.3.7. get<Height> is convertible to Scalar", "[Window::get][Size][Height]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(std::is_convertible_v<decltype(window->get<piwm::Height>()), piwm::Scalar>);
+}
+
+TEST_CASE("1.2.3.8. get<Height> for default initialized windows", "[Window::get][Size][Height]")
+{
+    auto const window = piwm::make_window();
+    REQUIRE(window->get<piwm::Height>() == 600);
 }
