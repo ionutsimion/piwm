@@ -4,7 +4,7 @@
 #include <struct.hxx>
 #include <typedecl.hxx>
 
-namespace pi
+namespace piwm
 {
     using Title = td::typedecl<std::string, TAG(Title)>;
 

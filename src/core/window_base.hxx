@@ -3,7 +3,7 @@
 
 #include <piwm/window.hxx>
 
-namespace pi::core
+namespace piwm::core
 {
     class WindowBase: public Window
     {
@@ -12,6 +12,7 @@ namespace pi::core
 
         ~WindowBase() override = default;
 
+    private:
         [[nodiscard]] auto title() const -> Title override;
         [[nodiscard]] auto position() const -> Position override;
         [[nodiscard]] auto size() const -> Size override;
