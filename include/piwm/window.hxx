@@ -3,7 +3,9 @@
 
 #include <memory>
 
-#include "types.hxx"
+#include <typelists/typelists.hxx>
+
+#include <piwm/types.hxx>
 
 namespace piwm
 {
@@ -39,13 +41,13 @@ namespace piwm
     {
         auto constexpr number_of_arguments = sizeof...(Types);
 
-        auto constexpr title_requests = tl::count<Title, Types...>();
-        auto constexpr position_requests = tl::count<Position, Types...>();
-        auto constexpr x_requests = tl::count<X, Types...>();
-        auto constexpr y_requests = tl::count<Y, Types...>();
-        auto constexpr size_requests = tl::count<Size, Types...>();
-        auto constexpr width_requests = tl::count<Width, Types...>();
-        auto constexpr height_requests = tl::count<Height, Types...>();
+        auto constexpr title_requests = pi::tl::count<Title, Types...>();
+        auto constexpr position_requests = pi::tl::count<Position, Types...>();
+        auto constexpr x_requests = pi::tl::count<X, Types...>();
+        auto constexpr y_requests = pi::tl::count<Y, Types...>();
+        auto constexpr size_requests = pi::tl::count<Size, Types...>();
+        auto constexpr width_requests = pi::tl::count<Width, Types...>();
+        auto constexpr height_requests = pi::tl::count<Height, Types...>();
 
         static_assert(number_of_arguments ==  title_requests
                                             + position_requests

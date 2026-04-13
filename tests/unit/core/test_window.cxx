@@ -1,13 +1,11 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <struct.hxx>
+#include <typelists/struct.hxx>
 
 #include <piwm/types.hxx>
 #include <piwm/window.hxx>
 
 using namespace std::string_literals;
-
-using namespace piwm;
 
 SCENARIO("Instantiating a Window")
 {
@@ -15,12 +13,13 @@ SCENARIO("Instantiating a Window")
     {
         WHEN("A window is created with default parameters")
         {
+            using namespace piwm;
+
             auto const window = make_window();
             auto const default_title = "Hello"s;
             auto const default_x = X{ Scalar{ 0 } };
             auto const default_y = Y{ Scalar{ 0 } };
-            // TODO: Add copy and move constructors for wrapper_for_fundamental to use default_x and default_y
-            auto const default_position = Position{ X{ Scalar{ 0 } }, Y{ Scalar{ 0 } } };
+            auto const default_position = Position{ default_x , default_y };
             auto const default_width = Width{ Scalar{ 800 } };
             auto const default_height = Height{ Scalar{ 600 } };
             auto const default_size = Size{ Width{ Scalar{ 800 } }, Height{ Scalar{ 600 } } };

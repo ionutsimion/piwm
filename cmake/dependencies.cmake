@@ -1,11 +1,11 @@
 include(FetchContent)
 
 FetchContent_Declare(
-        typedecl
+        typelists
         GIT_REPOSITORY https://github.com/ionutsimion/typelists.git
-        GIT_TAG v0.1.2
+        GIT_TAG v0.1.3
 )
-FetchContent_MakeAvailable(typedecl)
+FetchContent_MakeAvailable(typelists)
 
 FetchContent_Declare(
         Catch2
