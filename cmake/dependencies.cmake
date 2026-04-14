@@ -3,8 +3,9 @@ include(FetchContent)
 FetchContent_Declare(
         typelists
         GIT_REPOSITORY https://github.com/ionutsimion/typelists.git
-        GIT_TAG v0.1.4
+        GIT_TAG v0.1.5
 )
+set(TYPELISTS_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(typelists)
 
 FetchContent_Declare(
