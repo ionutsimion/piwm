@@ -20,6 +20,11 @@ namespace piwm
 
         virtual ~Window() = default;
 
+        /**
+         * Get attribute values of the Window instance.
+         * @tparam Types Expected piwm types: Title, Position (or X and/or Y), Size (or Width and/or Height)
+         * @return The requested attribute value if one is requested, a tuple of attribute values if more are requested
+         */
         template <typename ...Types>
         [[nodiscard]] auto get() const;
 
@@ -38,6 +43,10 @@ namespace piwm
     auto Window::get() const
     {
         auto constexpr number_of_arguments = sizeof...(Types);
+        static_assert(number_of_arguments > 0,
+            "piwm::Window::get() expects at least one argument. "
+            "Expected types: piwm::Title, piwm::Size, piwm::Position, piwm::X, piwm::Y, piwm::Width, piwm::Height."
+            );
 
         auto constexpr title_requests = pi::tl::count<Title, Types...>();
         auto constexpr position_requests = pi::tl::count<Position, Types...>();
@@ -54,10 +63,7 @@ namespace piwm
                                             + size_requests
                                             + width_requests
                                             + height_requests,
-            "piwm::Window::get() expects one argument: "
-            "piwm::Title; "
-            "piwm::Position or piwm::X or piwm::Y; "
-            "piwm::Size or piwm::Width or piwm::Height.");
+            "Expected types: piwm::Title, piwm::Size, piwm::Position, piwm::X, piwm::Y, piwm::Width, piwm::Height.");
 
         static_assert(title_requests <= 1ul, "piwm::Title is expected at most once.");
         static_assert(position_requests <= 1ul, "piwm::Position is expected at most once.");
@@ -67,20 +73,30 @@ namespace piwm
         static_assert(width_requests <= 1ul, "piwm::Width is expected at most once.");
         static_assert(height_requests <= 1ul, "piwm::Height is expected at most once.");
 
-        if constexpr (title_requests)
-            return title();
-        else if constexpr (position_requests)
-            return position();
-        else if constexpr (x_requests)
-            return position().get<X>();
-        else if constexpr (y_requests)
-            return position().get<Y>();
-        else if constexpr (size_requests)
-            return size();
-        else if constexpr (width_requests)
-            return size().get<Width>();
-        else if constexpr (height_requests)
-            return size().get<Height>();
+        static_assert(!(position_requests && x_requests | y_requests),
+            "piwm::Position cannot be requested along with piwm::X or piwm::Y.");
+        static_assert(!(size_requests && width_requests | height_requests),
+            "piwm::Size cannot be requested along with piwm::Width or piwm::Height.");
+
+        if constexpr (number_of_arguments == 1ul)
+        {
+            if constexpr (title_requests)
+                return title();
+            else if constexpr (position_requests)
+                return position();
+            else if constexpr (x_requests)
+                return position().get<X>();
+            else if constexpr (y_requests)
+                return position().get<Y>();
+            else if constexpr (size_requests)
+                return size();
+            else if constexpr (width_requests)
+                return size().get<Width>();
+            else if constexpr (height_requests)
+                return size().get<Height>();
+        }
+        else
+            return std::make_tuple(get<Types>()...);
     }
 }
 
