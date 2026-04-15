@@ -178,3 +178,11 @@ TEST_CASE("1.2.4.1. get<Types...> for two or more, different, non-excluding type
         REQUIRE_THAT(height, Catch::Matchers::WithinAbs(Scalar{ 600 }, scalar_epsilon));
     }
 }
+
+TEST_CASE("1.3.1.1. set<Title> changes the title of the instance")
+{
+    auto window = piwm::make_window();
+    //window.set<piwm::Title>("New Title");
+
+    REQUIRE(window->get<piwm::Title>() == "New Title");
+}

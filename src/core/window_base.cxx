@@ -20,3 +20,27 @@ auto piwm::core::WindowBase::size() const -> Size
 {
     return default_window_size;
 }
+
+auto piwm::core::WindowBase::set_title(Title const &) -> void
+{
+}
+
+auto piwm::core::WindowBase::set_title(Title &&) -> void
+{
+}
+
+auto piwm::core::WindowBase::set_position(Position const &) -> void
+{
+}
+
+auto piwm::core::WindowBase::set_position(Position &&) -> void
+{
+}
+
+auto piwm::core::WindowBase::set_size(Size const &) -> void
+{
+}
+
+auto piwm::core::WindowBase::set_size(Size &&) -> void
+{
+}

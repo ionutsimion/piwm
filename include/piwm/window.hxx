@@ -28,10 +28,20 @@ namespace piwm
         template <typename ...Types>
         [[nodiscard]] auto get() const;
 
+        template <typename ...Types>
+        auto set(Types &&...) -> void;
+
     private:
         [[nodiscard]] virtual auto title() const -> Title = 0;
         [[nodiscard]] virtual auto position() const -> Position = 0;
         [[nodiscard]] virtual auto size() const -> Size = 0;
+
+        virtual auto set_title(Title const &) -> void = 0;
+        virtual auto set_title(Title &&) -> void = 0;
+        virtual auto set_position(Position const &) -> void = 0;
+        virtual auto set_position(Position &&) -> void = 0;
+        virtual auto set_size(Size const &) -> void = 0;
+        virtual auto set_size(Size &&) -> void = 0;
     };
 
     auto make_window() -> std::unique_ptr<Window>;
@@ -97,6 +107,12 @@ namespace piwm
         }
         else
             return std::make_tuple(get<Types>()...);
+    }
+
+    template<typename... Types>
+    auto Window::set(Types &&...) -> void
+    {
+
     }
 }
 
