@@ -181,8 +181,20 @@ TEST_CASE("1.2.4.1. get<Types...> for two or more, different, non-excluding type
 
 TEST_CASE("1.3.1.1. set<Title> changes the title of the instance")
 {
-    auto window = piwm::make_window();
-    //window.set<piwm::Title>("New Title");
+    auto const new_title = piwm::Title{ "New title" };
 
-    REQUIRE(window->get<piwm::Title>() == "New Title");
+    auto const window = piwm::make_window();
+    window->set(new_title);
+
+    REQUIRE(window->get<piwm::Title>() == new_title);
+}
+
+TEST_CASE("1.3.1.2. set<Position> changes the position of the instance")
+{
+    auto const new_position = piwm::Position(piwm::X{ piwm::Scalar{ 100 } }, piwm::Y{ piwm::Scalar{ 100 } });
+
+    auto const window = piwm::make_window();
+    window->set(new_position);
+
+    REQUIRE(window->get<piwm::Position>() == new_position);
 }

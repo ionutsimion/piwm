@@ -5,6 +5,8 @@
 
 #include <piwm/types.hxx>
 
+#include "../../src/core/constants.hxx"
+
 namespace piwm
 {
     class Window
@@ -33,7 +35,9 @@ namespace piwm
 
     private:
         [[nodiscard]] virtual auto title() const -> Title = 0;
+        [[nodiscard]] virtual auto title() -> Title & = 0;
         [[nodiscard]] virtual auto position() const -> Position = 0;
+        [[nodiscard]] virtual auto position() -> Position & = 0;
         [[nodiscard]] virtual auto size() const -> Size = 0;
 
         virtual auto set_title(Title const &) -> void = 0;
@@ -110,9 +114,13 @@ namespace piwm
     }
 
     template<typename... Types>
-    auto Window::set(Types &&...) -> void
+    auto Window::set(Types &&... values) -> void
     {
+        if constexpr (constexpr auto pos = pi::tl::find<Title, Types...>(); pos != pi::tl::npos)
+            title() = pi::tl::get<Types...>(pos, std::forward<Types...>(values...));
 
+        if constexpr (constexpr auto pos = pi::tl::find<Position, Types...>(); pos != pi::tl::npos)
+            position() = pi::tl::get<Types...>(pos, std::forward<Types...>(values...));
     }
 }
 

@@ -3,6 +3,8 @@
 
 #include <piwm/window.hxx>
 
+#include <core/constants.hxx>
+
 namespace piwm::core
 {
     class WindowBase: public Window
@@ -14,7 +16,9 @@ namespace piwm::core
 
     private:
         [[nodiscard]] auto title() const -> Title override;
+        [[nodiscard]] auto title() -> Title & override;
         [[nodiscard]] auto position() const -> Position override;
+        [[nodiscard]] auto position() -> Position & override;
         [[nodiscard]] auto size() const -> Size override;
 
         auto set_title(Title const &) -> void override;
@@ -23,6 +27,10 @@ namespace piwm::core
         auto set_position(Position &&) -> void override;
         auto set_size(Size const &) -> void override;
         auto set_size(Size &&) -> void override;
+
+    protected:
+        Title title_{ default_window_title };
+        Position position_{ default_window_position };
     };
 }
 

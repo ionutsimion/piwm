@@ -8,12 +8,22 @@ auto piwm::make_window() -> std::unique_ptr<Window>
 
 auto piwm::core::WindowBase::title() const -> Title
 {
-    return default_window_title;
+    return title_;
+}
+
+auto piwm::core::WindowBase::title() -> Title &
+{
+    return title_;
 }
 
 auto piwm::core::WindowBase::position() const -> Position
 {
-    return default_window_position;
+    return position_;
+}
+
+auto piwm::core::WindowBase::position() -> Position &
+{
+    return position_;
 }
 
 auto piwm::core::WindowBase::size() const -> Size
