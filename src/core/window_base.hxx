@@ -20,17 +20,12 @@ namespace piwm::core
         [[nodiscard]] auto position() const -> Position override;
         [[nodiscard]] auto position() -> Position & override;
         [[nodiscard]] auto size() const -> Size override;
-
-        auto set_title(Title const &) -> void override;
-        auto set_title(Title &&) -> void override;
-        auto set_position(Position const &) -> void override;
-        auto set_position(Position &&) -> void override;
-        auto set_size(Size const &) -> void override;
-        auto set_size(Size &&) -> void override;
+		[[nodiscard]] auto size() -> Size & override;
 
     protected:
         Title title_{ default_window_title };
         Position position_{ default_window_position };
+		Size size_{ default_window_size };
     };
 }
 
