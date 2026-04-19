@@ -1,7 +1,7 @@
 #include <core/constants.hxx>
 #include <core/window_base.hxx>
 
-auto piwm::make_window() -> std::unique_ptr<Window>
+auto piwm::Window::make_window() -> std::unique_ptr<Window>
 {
     return std::make_unique<core::WindowBase>();
 }

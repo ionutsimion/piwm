@@ -13,7 +13,7 @@ namespace
     auto constexpr scalar_epsilon = piwm::Scalar{ 1.e-10 };
 }
 
-TEST_CASE("A window instance can be created with default attributes.", "[Window][Default]")
+TEST_CASE("A window instance can be created with default attributes.", "[Window][Default][Get]")
 {
 	using namespace piwm;
 
@@ -139,5 +139,77 @@ TEST_CASE("The attributes of a window can be changed.", "[Window][Set]")
 		REQUIRE_THAT(window->get<Y>(), Catch::Matchers::WithinAbs(new_y, scalar_epsilon));
 		REQUIRE_THAT(window->get<Width>(), Catch::Matchers::WithinAbs(new_width, scalar_epsilon));
 		REQUIRE_THAT(window->get<Height>(), Catch::Matchers::WithinAbs(new_height, scalar_epsilon));
+    }
+}
+
+TEST_CASE("A window instance can be created with custom attributes.", "[Window][Custom][Get]")
+{
+    using namespace piwm;
+
+    auto const custom_title = Title{ "Custom Title" };
+    auto constexpr custom_x = X{ Scalar{ 10 } };
+    auto constexpr custom_y = Y{ Scalar{ 20 } };
+    auto const custom_position = Position(custom_x, custom_y);
+    auto constexpr custom_width = Width{ Scalar{ 320 } };
+    auto constexpr custom_height = Height{ Scalar{ 240 } };
+    auto const custom_size = Size{ custom_width, custom_height };
+
+    auto const default_title = Title{ "PiWM" };
+    auto constexpr default_x = X{ Scalar{ 0 } };
+    auto constexpr default_y = Y{ Scalar{ 0 } };
+    auto const default_position = Position(default_x, default_y);
+    auto constexpr default_width = Width{ Scalar{ 800 } };
+    auto constexpr default_height = Height{ Scalar{ 600 } };
+    auto const default_size = Size{ default_width, default_height };
+
+    auto const window{ nullptr };
+
+    SECTION("A window can be created with a custom title.")
+    {
+        auto const window = make_window(custom_title);
+
+        REQUIRE(window->get<Title>() == custom_title);
+
+        REQUIRE(window->get<Position>() == default_position);
+        REQUIRE(window->get<Size>() == default_size);
+    }
+
+    SECTION("A window can be created with a custom position.")
+    {
+        auto const window = make_window(custom_position);
+
+        REQUIRE(window->get<Position>() == custom_position);
+
+        REQUIRE(window->get<Title>() == default_title);
+        REQUIRE(window->get<Size>() == default_size);
+    }
+
+    SECTION("A window can be created with a custom size.")
+    {
+        auto const window = make_window(custom_size);
+
+        REQUIRE(window->get<Size>() == custom_size);
+
+        REQUIRE(window->get<Title>() == default_title);
+        REQUIRE(window->get<Position>() == default_position);
+    }
+
+    SECTION("A window can be created with all custom attributes with one call.")
+    {
+        auto const window = make_window(custom_title, custom_position, custom_size);
+        REQUIRE(window->get<Title>() == custom_title);
+        REQUIRE(window->get<Position>() == custom_position);
+        REQUIRE(window->get<Size>() == custom_size);
+	}
+
+    SECTION("A window can be created with several custom attributes with one call.")
+    {
+        auto const window = make_window(custom_x, custom_y, custom_width, custom_height);
+        REQUIRE_THAT(window->get<X>(), Catch::Matchers::WithinAbs(custom_x, scalar_epsilon));
+        REQUIRE_THAT(window->get<Y>(), Catch::Matchers::WithinAbs(custom_y, scalar_epsilon));
+        REQUIRE_THAT(window->get<Width>(), Catch::Matchers::WithinAbs(custom_width, scalar_epsilon));
+        REQUIRE_THAT(window->get<Height>(), Catch::Matchers::WithinAbs(custom_height, scalar_epsilon));
+
+        REQUIRE(window->get<Title>() == default_title);
     }
 }
